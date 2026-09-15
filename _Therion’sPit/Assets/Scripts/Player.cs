@@ -5,11 +5,13 @@ public class Player : MonoBehaviour{
 
     [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private Transform CameraFollowPoint;
-    [SerializeField] private MyCharacterController characterController;
+    [SerializeField] private CharacterController characterController;
 
     [SerializeField] private InputActionReference lookAction;
     [SerializeField] private InputActionReference scrollAction;
-
+    [SerializeField] private InputActionReference moveAction;
+    [SerializeField] private InputActionReference jumpAction;
+    
     private Vector3 lookInputVector; 
 
 
@@ -17,13 +19,15 @@ public class Player : MonoBehaviour{
     private void OnEnable()
     {
         lookAction.action.Enable();
-        scrollAction.action.Enable(); 
+        scrollAction.action.Enable();
+        jumpAction.action.Enable();  
     }
 
     private void OnDisable()
     {
         lookAction.action.Disable();
         scrollAction.action.Disable();
+        jumpAction.action.Disable(); 
     }
 
 
@@ -36,7 +40,7 @@ public class Player : MonoBehaviour{
     private void handleCameraInput()
     {
         Vector2 mouseDelta = lookAction.action.ReadValue<Vector2>();
-
+         
         float mouseUp    = mouseDelta.y;
         float mouseRight = mouseDelta.x;
 
@@ -46,21 +50,27 @@ public class Player : MonoBehaviour{
         playerCamera.updateWithInput(Time.deltaTime, scrollInput, lookInputVector);
     }
 
-    // private void handleCameraInput(){
-    //     float mouseUp = Input.GetAxisRaw("Mouse Y");
-    //     float mouseRight = Input.GetAxisRaw("Mouse X");
+    
 
+    public void handleCharacterInputs(){
 
-    //     lookInputVector = new Vector3(mouseRight , mouseUp , 0f);
+        Debug.Log("handleCharacterInputs called");
+        PlayerInputs inputs = new PlayerInputs();
 
-    //     float scrollInput = -Input.GetAxis("Mouse ScrollWheel");
-    //     playerCamera.updateWithInput(Time.deltaTime,scrollInput,lookInputVector);
+        Vector2 move = moveAction.action.ReadValue<Vector2>();
+        inputs.moveAxisRight   = move.x;   // A/D
+        inputs.moveAxisForward = move.y;   // W/S
 
+        inputs.cameraRotation = playerCamera.transform.rotation;
+        inputs.jumpPressed     = jumpAction.action.WasPressedThisFrame();
 
-    // }
+        characterController.setInputs(ref inputs);
+    }
 
+    
     private void LateUpdate(){
         handleCameraInput();
+        handleCharacterInputs();
     }
 
       
