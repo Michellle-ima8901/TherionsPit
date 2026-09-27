@@ -1185,7 +1185,7 @@ Terrain:
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_DetailObjectDistance: 1000
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -1899,7 +1899,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 669030313}
   - {fileID: 1395041569}
   - {fileID: 480808107}
   - {fileID: 343173598}
@@ -1908,6 +1907,7 @@ Transform:
   - {fileID: 1539990475}
   - {fileID: 740075672}
   - {fileID: 1291165149}
+  - {fileID: 669030313}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1838956331
