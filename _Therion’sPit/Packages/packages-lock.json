@@ -54,6 +54,16 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.film-internal-utilities": {
+      "version": "0.18.4-preview",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.timeline": "1.2.18",
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.ide.rider": {
       "version": "3.0.38",
       "depth": 0,
@@ -177,6 +187,12 @@
         "com.unity.searcher": "4.9.3"
       }
     },
+    "com.unity.springbone": {
+      "version": "file:/Users/michelleimafidon/TherionsTrialsAssets/UnityChanSpringBone-release-1.1",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.test-framework": {
       "version": "1.7.0",
       "depth": 0,
@@ -206,6 +222,16 @@
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.toonshader": {
+      "version": "0.10.2-preview",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.render-pipelines.core": "10.0.0",
+        "com.unity.film-internal-utilities": "0.18.4-preview"
       },
       "url": "https://packages.unity.com"
     },
@@ -239,6 +265,13 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "jp.lilxyzw.liltoon": {
+      "version": "https://github.com/lilxyzw/lilToon.git?path=Assets/lilToon#master",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "72fc09625b24c9a750591c286e9192512a5177a1"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

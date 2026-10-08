@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: df2d1992941964f45a24ec4f3533ee18
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 364782
+  packageName: "Stylized Mage Pack \u2013 Animated Characters (Male & Female)"
+  packageVersion: 2.0.0
+  assetPath: Assets/stylizedmagepackV1/StylizedMagePack/DemoScene/DemoSceneShowCaseAnimations/Humanoid_DemoScene2.controller
+  uploadId: 955370

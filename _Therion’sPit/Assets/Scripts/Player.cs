@@ -5,7 +5,8 @@ public class Player : MonoBehaviour{
 
     [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private Transform CameraFollowPoint;
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] private PlayerCharacterController characterController;
+    private MagePlayerAnimations magePlayerAnimations;
 
     [SerializeField] private InputActionReference lookAction;
     [SerializeField] private InputActionReference scrollAction;
@@ -32,8 +33,22 @@ public class Player : MonoBehaviour{
 
 
     private void Start(){
+
+
+         // DEBUG — find out where the component actually is
+        var onSelf = GetComponent<MagePlayerAnimations>();
+        var inChildren = GetComponentInChildren<MagePlayerAnimations>();
+        var inParents = GetComponentInParent<MagePlayerAnimations>();
+        var inScene = FindObjectOfType<MagePlayerAnimations>();
+
+        Debug.Log($"OnSelf: {onSelf != null}");
+        Debug.Log($"InChildren: {inChildren != null}");
+        Debug.Log($"InParents: {inParents != null}");
+        Debug.Log($"InScene: {inScene != null}, on object: {(inScene != null ? inScene.gameObject.name : "n/a")}");
         Cursor.lockState = CursorLockMode.Locked;
         playerCamera.setFollowTransform(CameraFollowPoint); 
+        magePlayerAnimations = GetComponentInChildren<MagePlayerAnimations>();
+        
     }
 
 
@@ -53,6 +68,7 @@ public class Player : MonoBehaviour{
     
 
     public void handleCharacterInputs(){
+      
 
         Debug.Log("handleCharacterInputs called");
         PlayerInputs inputs = new PlayerInputs();
@@ -62,7 +78,12 @@ public class Player : MonoBehaviour{
         inputs.moveAxisForward = move.y;   // W/S
 
         inputs.cameraRotation = playerCamera.transform.rotation;
-        inputs.jumpPressed     = jumpAction.action.WasPressedThisFrame();
+        if (jumpAction.action.WasPressedThisFrame()){
+            inputs.jumpPressed = true;
+            magePlayerAnimations.OnJump();
+
+        }
+        //inputs.jumpPressed     = jumpAction.action.WasPressedThisFrame();
 
         characterController.setInputs(ref inputs);
     }

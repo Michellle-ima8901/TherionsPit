@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1cbd74c7f41ca3f43b32c9b011757361
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 364782
+  packageName: "Stylized Mage Pack \u2013 Animated Characters (Male & Female)"
+  packageVersion: 2.0.0
+  assetPath: Assets/stylizedmagepackV1/StylizedMagePack/VFXs/VFX_Materials/BaseShader_BallTrail_Add_02.mat
+  uploadId: 955370

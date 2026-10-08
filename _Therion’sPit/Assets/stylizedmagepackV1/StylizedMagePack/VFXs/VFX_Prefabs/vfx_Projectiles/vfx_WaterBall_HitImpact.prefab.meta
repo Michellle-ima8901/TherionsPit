@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b43871e7fd48f004388c03418fef35af
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 364782
+  packageName: "Stylized Mage Pack \u2013 Animated Characters (Male & Female)"
+  packageVersion: 2.0.0
+  assetPath: Assets/stylizedmagepackV1/StylizedMagePack/VFXs/VFX_Prefabs/vfx_Projectiles/vfx_WaterBall_HitImpact.prefab
+  uploadId: 955370
