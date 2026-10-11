@@ -18,12 +18,15 @@ public class PlayerCharacterController: MonoBehaviour, ICharacterController
     private Vector3 lookInputVector ;
     private PlayerInputs currentInputs;
 
-    [SerializeField]private float maxStableMoveSpeed = 10f;
+   
+    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private float sprintSpeed = 10f;
     [SerializeField]private float stableMovementSharpness = 15f ;
     [SerializeField]private float orientationSharpness = 10f ;
     [SerializeField] private float jumpSpeed = 8f;
     [SerializeField] private Vector3 gravity = new Vector3(0f, -30f, 0f); 
     private bool jumpRequested;
+    private bool isSprinting;
     
 
 
@@ -40,6 +43,7 @@ public class PlayerCharacterController: MonoBehaviour, ICharacterController
 
         Debug.Log($"setInputs | fwd={inputs.moveAxisForward} right={inputs.moveAxisRight} | camRot={(inputs.cameraRotation == default ? "NULL" : "OK")}");
         Debug.Log($"setInputs: forward={inputs.moveAxisForward}, right={inputs.moveAxisRight}");
+        isSprinting = inputs.sprintHeld;
         if (inputs.jumpPressed){
             jumpRequested = true;
         
@@ -112,15 +116,17 @@ public class PlayerCharacterController: MonoBehaviour, ICharacterController
             moveInputVector.Normalize();
         }
 
-        moveInputVector = new Vector3(currentInputs.moveAxisRight, 0f, currentInputs.moveAxisForward);
-        moveInputVector = currentInputs.cameraRotation * moveInputVector;
-        moveInputVector.y = 0f;
-        if (moveInputVector.sqrMagnitude > 0.01f) moveInputVector.Normalize();
+        // moveInputVector = new Vector3(currentInputs.moveAxisRight, 0f, currentInputs.moveAxisForward);
+        // moveInputVector = currentInputs.cameraRotation * moveInputVector;
+        // moveInputVector.y = 0f;
+        // if (moveInputVector.sqrMagnitude > 0.01f) moveInputVector.Normalize();
 
         Vector3 effectiveGroundNormal = motor.GroundingStatus.GroundNormal;
         Vector3 inputRight = Vector3.Cross(moveInputVector, motor.CharacterUp);
         Vector3 reorientedInput = Vector3.Cross(effectiveGroundNormal, inputRight).normalized * moveInputVector.magnitude;
-        Vector3 targetMovementVelocity = reorientedInput * maxStableMoveSpeed;
+        float currentSpeed = isSprinting ? sprintSpeed : walkSpeed;
+        Vector3 targetMovementVelocity = reorientedInput * currentSpeed;
+        //Vector3 targetMovementVelocity = reorientedInput * maxStableMoveSpeed;
 
         Vector3 currentHorizontal = Vector3.ProjectOnPlane(currentVelocity, motor.CharacterUp);
         Vector3 newHorizontal = Vector3.Lerp(

@@ -1247,7 +1247,7 @@ Terrain:
   m_GameObject: {fileID: 583868819}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 9ee2a7d69110b4d7999a12b89fd73c38, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -1643,6 +1643,11 @@ Terrain:
   m_EnableTreesAndDetailsRayTracing: 0
   m_EnableHeightmapLODFrustumCulling: 1
   m_TreeMotionVectorModeOverride: 3
+--- !u!1 &823300666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3584638034752533270, guid: f0b9558a5a908d346bd297f4abfc785f, type: 3}
+  m_PrefabInstance: {fileID: 1658704444}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832163733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1816,8 +1821,6 @@ GameObject:
   - component: {fileID: 892210327}
   - component: {fileID: 892210326}
   - component: {fileID: 892210328}
-  - component: {fileID: 892210329}
-  - component: {fileID: 892210330}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -1919,45 +1922,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterController
   motor: {fileID: 892210326}
-  maxStableMoveSpeed: 10
+  walkSpeed: 5
+  sprintSpeed: 10
   stableMovementSharpness: 15
   orientationSharpness: 10
   jumpSpeed: 8
   gravity: {x: 0, y: -30, z: 0}
---- !u!114 &892210329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 892210324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef75ad66e843e402187c37137adfd09b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MagePlayerAnimations
---- !u!95 &892210330
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 892210324}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ebff563c3b6c118408b87a36d5d5ee53, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &906931301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2825,10 +2795,12 @@ MonoBehaviour:
   playerCamera: {fileID: 832163738}
   CameraFollowPoint: {fileID: 179784496}
   characterController: {fileID: 892210328}
+  magePlayerAnimations: {fileID: 1658704447}
   lookAction: {fileID: -5630151704836100654, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   scrollAction: {fileID: -6839002277869136559, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   jumpAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  sprintAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &1319075498
 GameObject:
   m_ObjectHideFlags: 0
@@ -3494,13 +3466,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3584638034752533270, guid: f0b9558a5a908d346bd297f4abfc785f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1658704447}
   m_SourcePrefab: {fileID: 100100000, guid: f0b9558a5a908d346bd297f4abfc785f, type: 3}
 --- !u!4 &1658704445 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5173656403372386512, guid: f0b9558a5a908d346bd297f4abfc785f, type: 3}
   m_PrefabInstance: {fileID: 1658704444}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1658704447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823300666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef75ad66e843e402187c37137adfd09b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MagePlayerAnimations
 --- !u!1 &1673464345
 GameObject:
   m_ObjectHideFlags: 0

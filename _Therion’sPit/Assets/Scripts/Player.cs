@@ -6,12 +6,13 @@ public class Player : MonoBehaviour{
     [SerializeField] private PlayerCamera playerCamera;
     [SerializeField] private Transform CameraFollowPoint;
     [SerializeField] private PlayerCharacterController characterController;
-    private MagePlayerAnimations magePlayerAnimations;
+    [SerializeField] private MagePlayerAnimations magePlayerAnimations;
 
     [SerializeField] private InputActionReference lookAction;
     [SerializeField] private InputActionReference scrollAction;
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference jumpAction;
+    [SerializeField] private InputActionReference sprintAction;
     
     private Vector3 lookInputVector; 
 
@@ -21,7 +22,8 @@ public class Player : MonoBehaviour{
     {
         lookAction.action.Enable();
         scrollAction.action.Enable();
-        jumpAction.action.Enable();  
+        jumpAction.action.Enable(); 
+        sprintAction.action.Enable();
     }
 
     private void OnDisable()
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour{
         lookAction.action.Disable();
         scrollAction.action.Disable();
         jumpAction.action.Disable(); 
+        sprintAction.action.Disable();
     }
 
 
@@ -36,18 +39,18 @@ public class Player : MonoBehaviour{
 
 
          // DEBUG — find out where the component actually is
-        var onSelf = GetComponent<MagePlayerAnimations>();
-        var inChildren = GetComponentInChildren<MagePlayerAnimations>();
-        var inParents = GetComponentInParent<MagePlayerAnimations>();
-        var inScene = FindObjectOfType<MagePlayerAnimations>();
+        // var onSelf = GetComponent<MagePlayerAnimations>();
+        // var inChildren = GetComponentInChildren<MagePlayerAnimations>();
+        // var inParents = GetComponentInParent<MagePlayerAnimations>();
+        // var inScene = FindObjectOfType<MagePlayerAnimations>();
 
-        Debug.Log($"OnSelf: {onSelf != null}");
-        Debug.Log($"InChildren: {inChildren != null}");
-        Debug.Log($"InParents: {inParents != null}");
-        Debug.Log($"InScene: {inScene != null}, on object: {(inScene != null ? inScene.gameObject.name : "n/a")}");
+        // Debug.Log($"OnSelf: {onSelf != null}");
+        // Debug.Log($"InChildren: {inChildren != null}");
+        // Debug.Log($"InParents: {inParents != null}");
+        // Debug.Log($"InScene: {inScene != null}, on object: {(inScene != null ? inScene.gameObject.name : "n/a")}");
         Cursor.lockState = CursorLockMode.Locked;
         playerCamera.setFollowTransform(CameraFollowPoint); 
-        magePlayerAnimations = GetComponentInChildren<MagePlayerAnimations>();
+        //magePlayerAnimations = GetComponentInChildren<MagePlayerAnimations>();
         
     }
 
@@ -80,9 +83,14 @@ public class Player : MonoBehaviour{
         inputs.cameraRotation = playerCamera.transform.rotation;
         if (jumpAction.action.WasPressedThisFrame()){
             inputs.jumpPressed = true;
-            magePlayerAnimations.OnJump();
+            if (magePlayerAnimations != null)
+            {
+                magePlayerAnimations.OnJump();
+            }
+            //magePlayerAnimations.OnJump();
 
         }
+        inputs.sprintHeld = sprintAction.action.IsPressed();           
         //inputs.jumpPressed     = jumpAction.action.WasPressedThisFrame();
 
         characterController.setInputs(ref inputs);

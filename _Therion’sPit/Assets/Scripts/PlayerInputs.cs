@@ -6,5 +6,6 @@ public struct PlayerInputs
     public float moveAxisRight;     // A/D
     public Quaternion cameraRotation;
     public bool jumpPressed;
+    public bool sprintHeld;
 }
 
