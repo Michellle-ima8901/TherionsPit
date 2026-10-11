@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
-public class Player : MonoBehaviour{
+public class Player : NetworkBehaviour{
 
-    [SerializeField] private PlayerCamera playerCamera;
+    //[SerializeField] private PlayerCamera playerCamera;
+    private PlayerCamera playerCamera;
     [SerializeField] private Transform CameraFollowPoint;
     [SerializeField] private PlayerCharacterController characterController;
     [SerializeField] private MagePlayerAnimations magePlayerAnimations;
@@ -98,8 +100,36 @@ public class Player : MonoBehaviour{
 
     
     private void LateUpdate(){
+        if (!IsOwner){ 
+            return;
+        }
+
         handleCameraInput();
         handleCharacterInputs();
+    }
+
+    
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner) return;
+
+        Cursor.lockState = CursorLockMode.Locked;
+
+        // Find the scene's camera
+        playerCamera = Camera.main.GetComponent<PlayerCamera>();
+
+        if (playerCamera != null)
+        {
+            playerCamera.setFollowTransform(CameraFollowPoint);
+        }
+        else
+        {
+            Debug.LogError("Main Camera doesn't have a PlayerCamera script!");
+        }
+
+        // Also find the mage animations on a child
+        magePlayerAnimations = GetComponentInChildren<MagePlayerAnimations>();
     }
 
       

@@ -1,7 +1,8 @@
 using UnityEngine;
 using KinematicCharacterController;
+using Unity.Netcode;
 
-public class MagePlayerAnimations : MonoBehaviour
+public class MagePlayerAnimations : NetworkBehaviour
 {
     private Animator animator;
     private KinematicCharacterMotor motor;

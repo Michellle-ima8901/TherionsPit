@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using KinematicCharacterController;
+using Unity.Netcode;
 
 
 public struct playerInput{
@@ -10,7 +11,7 @@ public struct playerInput{
     
 }
 
-public class PlayerCharacterController: MonoBehaviour, ICharacterController
+public class PlayerCharacterController:  NetworkBehaviour, ICharacterController
 {
 
     [SerializeField]private KinematicCharacterMotor motor;
