@@ -4,7 +4,7 @@ using Unity.Netcode;
 
 public class Player : NetworkBehaviour{
 
-    //[SerializeField] private PlayerCamera playerCamera;
+    
     private PlayerCamera playerCamera;
     [SerializeField] private Transform CameraFollowPoint;
     [SerializeField] private PlayerCharacterController characterController;
@@ -37,24 +37,7 @@ public class Player : NetworkBehaviour{
     }
 
 
-    private void Start(){
-
-
-         // DEBUG — find out where the component actually is
-        // var onSelf = GetComponent<MagePlayerAnimations>();
-        // var inChildren = GetComponentInChildren<MagePlayerAnimations>();
-        // var inParents = GetComponentInParent<MagePlayerAnimations>();
-        // var inScene = FindObjectOfType<MagePlayerAnimations>();
-
-        // Debug.Log($"OnSelf: {onSelf != null}");
-        // Debug.Log($"InChildren: {inChildren != null}");
-        // Debug.Log($"InParents: {inParents != null}");
-        // Debug.Log($"InScene: {inScene != null}, on object: {(inScene != null ? inScene.gameObject.name : "n/a")}");
-        Cursor.lockState = CursorLockMode.Locked;
-        playerCamera.setFollowTransform(CameraFollowPoint); 
-        //magePlayerAnimations = GetComponentInChildren<MagePlayerAnimations>();
-        
-    }
+    
 
 
     private void handleCameraInput()
@@ -89,11 +72,11 @@ public class Player : NetworkBehaviour{
             {
                 magePlayerAnimations.OnJump();
             }
-            //magePlayerAnimations.OnJump();
+            
 
         }
         inputs.sprintHeld = sprintAction.action.IsPressed();           
-        //inputs.jumpPressed     = jumpAction.action.WasPressedThisFrame();
+       
 
         characterController.setInputs(ref inputs);
     }

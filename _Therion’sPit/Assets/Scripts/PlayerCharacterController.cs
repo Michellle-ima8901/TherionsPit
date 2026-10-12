@@ -4,6 +4,7 @@ using KinematicCharacterController;
 using Unity.Netcode;
 
 
+
 public struct playerInput{
     public float moveAxisForward;
     public float moveAxisRight;
@@ -42,8 +43,8 @@ public class PlayerCharacterController:  NetworkBehaviour, ICharacterController
     public void setInputs(ref PlayerInputs inputs)
     {
 
-        Debug.Log($"setInputs | fwd={inputs.moveAxisForward} right={inputs.moveAxisRight} | camRot={(inputs.cameraRotation == default ? "NULL" : "OK")}");
-        Debug.Log($"setInputs: forward={inputs.moveAxisForward}, right={inputs.moveAxisRight}");
+        // Debug.Log($"setInputs | fwd={inputs.moveAxisForward} right={inputs.moveAxisRight} | camRot={(inputs.cameraRotation == default ? "NULL" : "OK")}");
+        // Debug.Log($"setInputs: forward={inputs.moveAxisForward}, right={inputs.moveAxisRight}");
         isSprinting = inputs.sprintHeld;
         if (inputs.jumpPressed){
             jumpRequested = true;
@@ -117,10 +118,6 @@ public class PlayerCharacterController:  NetworkBehaviour, ICharacterController
             moveInputVector.Normalize();
         }
 
-        // moveInputVector = new Vector3(currentInputs.moveAxisRight, 0f, currentInputs.moveAxisForward);
-        // moveInputVector = currentInputs.cameraRotation * moveInputVector;
-        // moveInputVector.y = 0f;
-        // if (moveInputVector.sqrMagnitude > 0.01f) moveInputVector.Normalize();
 
         Vector3 effectiveGroundNormal = motor.GroundingStatus.GroundNormal;
         Vector3 inputRight = Vector3.Cross(moveInputVector, motor.CharacterUp);
