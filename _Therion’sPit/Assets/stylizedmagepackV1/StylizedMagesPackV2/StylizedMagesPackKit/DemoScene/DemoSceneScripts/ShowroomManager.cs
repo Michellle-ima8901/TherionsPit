@@ -32,20 +32,14 @@ namespace yohansouls.showroom
         public SetupVariants setupVariants;
         private int setupIndex = 0;
 
-        [Header("Weapon Prefab Cycle")]
-        public GameObject[] weaponPrefabs;
-        private int weaponIndex = 0;
-        private GameObject currentWeapon;
+        [Header("Weapon - Sword (Right Hand)")]
+        public GameObject swordPrefab;
+        private GameObject currentSword;
 
-        [Header("Upper Body Layer")]
-        // Must match the layer index in the Animator Controller (usually 1)
-        public int upperBodyLayerIndex = 1;
-        public GameObject upperBodyAnimContainer;
-        public GameObject buttonPrefab;
-        public Transform upperBodyButtonContainer;
-        public List<AnimationClip> upperBodyClips;
-        private bool combatModeActive = false;
-        private List<GameObject> generatedUpperBodyButtons = new List<GameObject>();
+        [Header("Weapon - Shield Variants (Left Hand)")]
+        public GameObject[] shieldPrefabs;
+        private int shieldIndex = 0;
+        private GameObject currentShield;
 
 
         void Start()
@@ -58,13 +52,7 @@ namespace yohansouls.showroom
             InitPrefabArrays(setupVariants.femalePrefabs, 0);
 
             UpdateDisplay();
-            SpawnWeapon(0);
-            GenerateUpperBodyButtons();
-
-            if (upperBodyAnimContainer != null)
-                upperBodyAnimContainer.SetActive(false);
-
-
+            SpawnWeapons();
         }
 
         private void InitPrefabArrays(GameObject[] arr, int activeIndex)
@@ -81,12 +69,12 @@ namespace yohansouls.showroom
             return arr[setupIndex];
         }
 
+
         public void ToggleGenre()
         {
             isMale = !isMale;
             UpdateDisplay();
-            SpawnWeapon(weaponIndex);
-            RefreshAnimator();
+            SpawnWeapons();
         }
 
         private void UpdateDisplay()
@@ -99,6 +87,7 @@ namespace yohansouls.showroom
 
             SyncSetupVisibility();
         }
+
 
         private void SyncSetupVisibility()
         {
@@ -122,8 +111,7 @@ namespace yohansouls.showroom
             setupIndex = (setupIndex + 1) % arr.Length;
             if (arr[setupIndex] != null) arr[setupIndex].SetActive(true);
 
-            SpawnWeapon(weaponIndex);
-            RefreshAnimator();
+            SpawnWeapons();
         }
 
         public void TogglePieceByTag(string tag)
@@ -144,104 +132,58 @@ namespace yohansouls.showroom
             btnImage.color = (btnImage.color == colorOn) ? colorOff : colorOn;
         }
 
-        public void CycleWeapon()
+        public void CycleShield()
         {
-            if (weaponPrefabs == null || weaponPrefabs.Length == 0) return;
-            weaponIndex = (weaponIndex + 1) % weaponPrefabs.Length;
-            SpawnWeapon(weaponIndex);
+            if (shieldPrefabs == null || shieldPrefabs.Length == 0) return;
+            shieldIndex = (shieldIndex + 1) % shieldPrefabs.Length;
+            SpawnWeapons();
         }
 
-        private void SpawnWeapon(int index)
+        private void SpawnWeapons()
         {
-            if (weaponPrefabs == null || weaponPrefabs.Length == 0) return;
-            if (currentWeapon != null) Destroy(currentWeapon);
+            // Destroy current weapons
+            if (currentSword != null) Destroy(currentSword);
+            if (currentShield != null) Destroy(currentShield);
 
             GameObject active = ActiveSetupPrefab();
             if (active == null) return;
 
-            Transform spawnPoint = null;
+            Transform rightHandPoint = null;
+            Transform leftHandPoint = null;
+
             foreach (Transform child in active.GetComponentsInChildren<Transform>(true))
             {
-                if (child.CompareTag("WeaponSpawnPoint"))
+                if (child.CompareTag("RightHandSpawnPoint ")) rightHandPoint = child;
+                if (child.CompareTag("LeftHandSpawnPoint ")) leftHandPoint = child;
+                if (rightHandPoint != null && leftHandPoint != null) break;
+            }
+
+            // Spawn Sword
+            if (swordPrefab != null && rightHandPoint != null)
+            {
+                currentSword = Instantiate(swordPrefab, rightHandPoint);
+                currentSword.transform.localPosition = Vector3.zero;
+                currentSword.transform.localRotation = Quaternion.identity;
+            }
+            else if (rightHandPoint == null)
+            {
+                Debug.LogWarning("RightHandSpawnPoint nao encontrado no prefab ativo!");
+            }
+
+            // Spawn Shield
+            if (shieldPrefabs != null && shieldPrefabs.Length > 0 && leftHandPoint != null)
+            {
+                if (shieldPrefabs[shieldIndex] != null)
                 {
-                    spawnPoint = child;
-                    break;
+                    currentShield = Instantiate(shieldPrefabs[shieldIndex], leftHandPoint);
+                    currentShield.transform.localPosition = Vector3.zero;
+                    currentShield.transform.localRotation = Quaternion.identity;
                 }
             }
-
-            if (spawnPoint == null)
+            else if (leftHandPoint == null)
             {
-                Debug.LogWarning("WeaponSpawnPoint nao encontrado no prefab ativo!");
-                return;
+                Debug.LogWarning("LeftHandSpawnPoint nao encontrado no prefab ativo!");
             }
-
-            if (weaponPrefabs[index] == null) return;
-
-            currentWeapon = Instantiate(weaponPrefabs[index], spawnPoint);
-            currentWeapon.transform.localPosition = Vector3.zero;
-            currentWeapon.transform.localRotation = Quaternion.identity;
-        }
-
-        // Toggles the upper body layer on/off
-        // Hook this up to your Combat Mode button OnClick
-        public void ToggleCombatMode()
-        {
-            combatModeActive = !combatModeActive;
-
-            if (upperBodyAnimContainer != null)
-                upperBodyAnimContainer.SetActive(combatModeActive);
-
-            GameObject active = ActiveSetupPrefab();
-            if (active == null) return;
-
-            Animator anim = active.GetComponent<Animator>();
-            if (anim == null) return;
-
-            anim.SetLayerWeight(upperBodyLayerIndex, combatModeActive ? 1f : 0f);
-        }
-
-        private void GenerateUpperBodyButtons()
-        {
-            if (buttonPrefab == null || upperBodyButtonContainer == null) return;
-
-            foreach (var clip in upperBodyClips)
-            {
-                if (clip == null) continue;
-                AnimationClip captured = clip;
-
-                GameObject btnGO = Instantiate(buttonPrefab, upperBodyButtonContainer);
-                generatedUpperBodyButtons.Add(btnGO);
-
-                var tmp = btnGO.GetComponentInChildren<TextMeshProUGUI>();
-                if (tmp != null) tmp.text = clip.name;
-
-                var btn = btnGO.GetComponent<Button>();
-                if (btn != null)
-                    btn.onClick.AddListener(() => PlayUpperBodyAnim(captured.name));
-            }
-        }
-
-        // Syncs the active prefab Animator with the current combat mode state
-        private void RefreshAnimator()
-        {
-            GameObject active = ActiveSetupPrefab();
-            if (active == null) return;
-
-            Animator anim = active.GetComponent<Animator>();
-            if (anim == null) return;
-
-            anim.SetLayerWeight(upperBodyLayerIndex, combatModeActive ? 1f : 0f);
-        }
-
-        private void PlayUpperBodyAnim(string stateName)
-        {
-            GameObject active = ActiveSetupPrefab();
-            if (active == null) return;
-
-            Animator anim = active.GetComponent<Animator>();
-            if (anim == null) return;
-
-            anim.CrossFadeInFixedTime(stateName, 0.2f, upperBodyLayerIndex);
         }
     }
 }

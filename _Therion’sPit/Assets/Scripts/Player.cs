@@ -27,6 +27,7 @@ public class Player : NetworkBehaviour{
         jumpAction.action.Enable(); 
         sprintAction.action.Enable();
     }
+    
 
     private void OnDisable()
     {
