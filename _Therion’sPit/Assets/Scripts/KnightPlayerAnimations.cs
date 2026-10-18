@@ -2,7 +2,7 @@ using UnityEngine;
 using KinematicCharacterController;
 using Unity.Netcode;
 
-public class KnightPlayerAnimations : MonoBehaviour
+public class KnightPlayerAnimations : MonoBehaviour , IPlayerAnimations
 {
     private Animator animator;
     private KinematicCharacterMotor motor;

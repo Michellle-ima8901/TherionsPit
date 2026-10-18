@@ -6,9 +6,10 @@ public class Player : NetworkBehaviour{
 
     
     private PlayerCamera playerCamera;
+    private IPlayerAnimations playerAnimations;
     [SerializeField] private Transform CameraFollowPoint;
     [SerializeField] private PlayerCharacterController characterController;
-    [SerializeField] private MagePlayerAnimations magePlayerAnimations;
+    private MagePlayerAnimations magePlayerAnimations;
 
     [SerializeField] private InputActionReference lookAction;
     [SerializeField] private InputActionReference scrollAction;
@@ -69,10 +70,8 @@ public class Player : NetworkBehaviour{
         inputs.cameraRotation = playerCamera.transform.rotation;
         if (jumpAction.action.WasPressedThisFrame()){
             inputs.jumpPressed = true;
-            if (magePlayerAnimations != null)
-            {
-                magePlayerAnimations.OnJump();
-            }
+            playerAnimations?.OnJump();
+           
             
 
         }
@@ -111,9 +110,8 @@ public class Player : NetworkBehaviour{
         {
             Debug.LogError("Main Camera doesn't have a PlayerCamera script!");
         }
+        playerAnimations = GetComponentInChildren<IPlayerAnimations>();
 
-        // Also find the mage animations on a child
-        magePlayerAnimations = GetComponentInChildren<MagePlayerAnimations>();
     }
 
       

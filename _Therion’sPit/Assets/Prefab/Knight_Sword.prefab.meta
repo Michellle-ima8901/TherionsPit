@@ -10,5 +10,5 @@ AssetOrigin:
   productId: 385010
   packageName: Stylized Knights Warriors Pack - Animated Characters (Male & Female)
   packageVersion: 1.0
-  assetPath: Assets/StylizedKnightWarriorsPackV1/StylizedKnightWarriorsKit/Prefabs/Weapons/Knight_Sword.prefab
+  assetPath: Assets/Prefab/Knight_Sword.prefab
   uploadId: 929608

@@ -2,7 +2,7 @@ using UnityEngine;
 using KinematicCharacterController;
 using Unity.Netcode;
 
-public class MagePlayerAnimations : NetworkBehaviour
+public class MagePlayerAnimations : NetworkBehaviour , IPlayerAnimations
 {
     private Animator animator;
     private KinematicCharacterMotor motor;
@@ -10,7 +10,6 @@ public class MagePlayerAnimations : NetworkBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        //motor = GetComponent<KinematicCharacterMotor>();
         motor = GetComponentInParent<KinematicCharacterMotor>();
     }
     

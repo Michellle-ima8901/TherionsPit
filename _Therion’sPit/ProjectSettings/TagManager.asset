@@ -6,6 +6,18 @@ TagManager:
   tags:
   - Dummy
   - SpawnPoint
+  - Boots
+  - 'LeftHandSpawnPoint '
+  - Belt
+  - 'RightHandSpawnPoint '
+  - Bag
+  - Pants
+  - Eyes
+  - Vambrace
+  - Hair
+  - Tshirt
+  - Strap
+  - KnightWeapon
   layers:
   - Default
   - TransparentFX

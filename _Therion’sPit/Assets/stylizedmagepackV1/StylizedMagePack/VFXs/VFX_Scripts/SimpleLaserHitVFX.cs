@@ -35,19 +35,19 @@ namespace StylizedMagePack
                 lr.SetPosition(1, hit.point);
                 lr.enabled = true;
 
-                //---------------------------------------------------
-                // This part is only for demoScene, can be deleted
-                // Check if we hit the Dummy and apply damage every damageInterval seconds
-                if (hit.collider.CompareTag("Dummy") && Time.time - lastDamageTime >= damageInterval)
-                {
-                    DemoSceneDummy dummy = hit.collider.GetComponent<DemoSceneDummy>();
-                    if (dummy != null)
-                    {
-                        dummy.TakeHit();
-                        lastDamageTime = Time.time;
-                        Debug.Log("Laser hit dummy!");
-                    }
-                }
+                // //---------------------------------------------------
+                // // This part is only for demoScene, can be deleted
+                // // Check if we hit the Dummy and apply damage every damageInterval seconds
+                // if (hit.collider.CompareTag("Dummy") && Time.time - lastDamageTime >= damageInterval)
+                // {
+                //     DemoSceneDummy dummy = hit.collider.GetComponent<DemoSceneDummy>();
+                //     if (dummy != null)
+                //     {
+                //         dummy.TakeHit();
+                //         lastDamageTime = Time.time;
+                //         Debug.Log("Laser hit dummy!");
+                //     }
+                // }
                 // -------------------------------------------------
             }
             else
