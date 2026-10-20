@@ -1,1 +1,0 @@
-TextMesh Pro (TMP) is required to run the demo scene.

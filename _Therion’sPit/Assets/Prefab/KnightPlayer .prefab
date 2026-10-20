@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 867390219
+  GlobalObjectIdHash: 1002854928
   InScenePlacedSourceGlobalObjectIdHash: 2686807523
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -380,6 +380,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 3aebb9e2120924c789faf9ec23eb97e5, type: 2}
+    - target: {fileID: 5866666021909216657, guid: bf6096c8b7eda7b498ea469f5412d62f, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -419,6 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82a678c91f9d64fe0929bcacec6a774b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KnightPlayerAnimations
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &1083478191338544690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,6 +459,10 @@ MonoBehaviour:
       NameHash: -1287227878
       Synchronize: 1
       ParameterType: 4
+    - name: HealthPoints
+      NameHash: -371419215
+      Synchronize: 1
+      ParameterType: 1
   AnimatorParametersExpanded: 0
 --- !u!4 &3925416318968551395 stripped
 Transform:

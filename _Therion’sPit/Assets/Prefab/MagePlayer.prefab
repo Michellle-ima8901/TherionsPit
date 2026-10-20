@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1588401750
+  GlobalObjectIdHash: 3845056721
   InScenePlacedSourceGlobalObjectIdHash: 2605941072
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -460,6 +460,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: ebff563c3b6c118408b87a36d5d5ee53, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4a36beb5c54c48046819fa41a164c810, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -546,4 +550,8 @@ MonoBehaviour:
       NameHash: -1287227878
       Synchronize: 1
       ParameterType: 4
+    - name: HealthPoints
+      NameHash: -371419215
+      Synchronize: 1
+      ParameterType: 1
   AnimatorParametersExpanded: 0

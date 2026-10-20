@@ -1,8 +1,8 @@
 using UnityEngine;
-using KinematicCharacterController;
 using Unity.Netcode;
+using KinematicCharacterController;
 
-public class MagePlayerAnimations : NetworkBehaviour , IPlayerAnimations
+public class MagePlayerAnimations : NetworkBehaviour, IPlayerAnimations
 {
     private Animator animator;
     private KinematicCharacterMotor motor;
@@ -12,14 +12,13 @@ public class MagePlayerAnimations : NetworkBehaviour , IPlayerAnimations
         animator = GetComponent<Animator>();
         motor = GetComponentInParent<KinematicCharacterMotor>();
     }
-    
 
-    // Update is called once per frame
     void Update()
     {
-        if (animator == null || motor == null){
-            return ;
-        }
+        
+        if (!IsOwner) return; 
+
+        if (animator == null || motor == null) return;
 
         Vector3 horizontalVelocity = Vector3.ProjectOnPlane(motor.Velocity, Vector3.up);
         animator.SetFloat("Speed", horizontalVelocity.magnitude);
@@ -29,6 +28,4 @@ public class MagePlayerAnimations : NetworkBehaviour , IPlayerAnimations
     public void OnJump(){
         animator.SetTrigger("Jump");
     }
-
-   
 }

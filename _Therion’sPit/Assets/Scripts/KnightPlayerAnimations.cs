@@ -1,8 +1,8 @@
 using UnityEngine;
-using KinematicCharacterController;
 using Unity.Netcode;
+using KinematicCharacterController;
 
-public class KnightPlayerAnimations : MonoBehaviour , IPlayerAnimations
+public class KnightPlayerAnimations: NetworkBehaviour, IPlayerAnimations
 {
     private Animator animator;
     private KinematicCharacterMotor motor;
@@ -10,17 +10,15 @@ public class KnightPlayerAnimations : MonoBehaviour , IPlayerAnimations
     void Start()
     {
         animator = GetComponent<Animator>();
-        //motor = GetComponent<KinematicCharacterMotor>();
         motor = GetComponentInParent<KinematicCharacterMotor>();
     }
-    
 
-    // Update is called once per frame
     void Update()
     {
-        if (animator == null || motor == null){
-            return ;
-        }
+        
+        if (!IsOwner) return; 
+
+        if (animator == null || motor == null) return;
 
         Vector3 horizontalVelocity = Vector3.ProjectOnPlane(motor.Velocity, Vector3.up);
         animator.SetFloat("Speed", horizontalVelocity.magnitude);
