@@ -4,7 +4,8 @@ using Unity.Netcode;
 public class RoleSelector : MonoBehaviour
 {
     private int selectedRole = 0; 
-    private bool hasLockedIn = false; 
+    private bool hasLockedIn = false;
+    private string errorMessage = "";
 
     void OnGUI()
     {
@@ -57,6 +58,13 @@ public class RoleSelector : MonoBehaviour
         else
             GUILayout.Label("You have joined the Party.");
 
+
+        if (!string.IsNullOrEmpty(errorMessage))
+        {
+            GUILayout.Label($"<color=red>{errorMessage}</color>");
+        }
+
+
         GUILayout.Space(20);
         GUILayout.Label("Choose Your Character:");
         
@@ -87,5 +95,12 @@ public class RoleSelector : MonoBehaviour
         }
 
         GUILayout.EndArea();
+    }
+
+    public void ShowError(string message)
+    {
+        // Unlock them from the waiting screen so they can pick again
+        hasLockedIn = false; 
+        errorMessage = message;
     }
 }
