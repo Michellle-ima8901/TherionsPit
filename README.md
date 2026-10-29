@@ -23,7 +23,8 @@
 
 ### Installation
 1. Clone the repository:
-   ```bash https://github.com/Michellle-ima8901/TherionsPit.git
+   ```bash
+   https://github.com/Michellle-ima8901/TherionsPit.git
 2. Open the project folder in Unity Hub.
 3. Wait for Unity to import all assets and packages.
 4. Open the MainMenu scene (located in Assets/Scenes/).
