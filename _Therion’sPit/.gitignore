@@ -111,3 +111,22 @@ InitTestScene*.unity*
 
 # Asset Dump — unused / imported assets that stay local only
 /[Aa]ssets/[Aa]sset[Dd]ump/
+
+
+# Specific asset packs used in the project
+/[Aa]ssets/[Ff]inalised[Aa]ssets/
+/[Aa]ssets/[Ss]tylized[Mm]age[Pp]ack[Vv]1/
+/[Aa]ssets/[Ii]dyllic [Ff]antasy [Nn]ature/
+
+# Raw 3D models, textures, and audio (Keeping scripts and prefabs only)
+*.fbx
+*.FBX
+*.png
+*.jpg
+*.jpeg
+*.psd
+*.tga
+*.wav
+*.mp3
+*.ogg
+*.exr

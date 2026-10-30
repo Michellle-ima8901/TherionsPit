@@ -5,19 +5,20 @@ using System.Collections.Generic;
 public class PartyManager : NetworkBehaviour
 {
     public List<GameObject> characterPrefabs; 
-
-    // This keeps track of who picked what before the game starts
+    public string serverPassword = ""; 
     private Dictionary<ulong, int> lockedInRoles = new Dictionary<ulong, int>();
 
-    // [ServerRpc(RequireOwnership = false)]
-    // public void LockInRoleServerRpc(int roleIndex, ServerRpcParams rpcParams = default)
-    // {
-    //     ulong clientId = rpcParams.Receive.SenderClientId;
-        
-    //     // Save their choice, but DON'T spawn them yet
-    //     lockedInRoles[clientId] = roleIndex;
-    //     Debug.Log($"Client {clientId} locked in role {roleIndex}. Waiting for host to start...");
-    // }
+    
+
+    public override void OnNetworkSpawn()
+    {
+        // Keep this object alive when changing scenes
+        if (IsServer)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     [ServerRpc(RequireOwnership = false)]
     public void LockInRoleServerRpc(int roleIndex, ServerRpcParams rpcParams = default)
     {
@@ -29,7 +30,7 @@ public class PartyManager : NetworkBehaviour
             if (role == roleIndex)
             {
                 Debug.LogWarning($"Client {clientId} tried to pick role {roleIndex}, but it's already taken!");
-                // Tell the client they failed
+                // Tell the client they failed (calls the new MenuButtons script)
                 RoleTakenClientRpc(rpcParams.Receive.SenderClientId);
                 return; // Stop here, don't save the choice
             }
@@ -46,7 +47,8 @@ public class PartyManager : NetworkBehaviour
         // This only runs on the specific client that tried to pick the taken role
         if (NetworkManager.Singleton.LocalClientId == clientId)
         {
-            RoleSelector ui = FindObjectOfType<RoleSelector>();
+            // UPDATED: We now look for MenuButtons instead of RoleSelector
+            MenuButtons ui = FindObjectOfType<MenuButtons>();
             if (ui != null)
             {
                 ui.ShowError("That character is already taken! Pick another.");
