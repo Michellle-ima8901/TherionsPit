@@ -50,11 +50,11 @@ public class MenuButtons : MonoBehaviour
        
     }
 
-    public void OnJoin02ButtonClicked(){
-        Debug.Log("Join02 button clicked ");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    // public void OnJoin02ButtonClicked(){
+    //     Debug.Log("Join02 button clicked ");
+    //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
          
-    }
+    // }
 
     
     
@@ -96,6 +96,7 @@ public class MenuButtons : MonoBehaviour
 
         // Start the coroutine to wait for the PartyManager to be ready
         StartCoroutine(LockInWhenReady());
+        
     }
 
     private IEnumerator LockInWhenReady()

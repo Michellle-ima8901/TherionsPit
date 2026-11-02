@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
 
+
 public class PartyManager : NetworkBehaviour
 {
     public List<GameObject> characterPrefabs; 
@@ -12,7 +13,7 @@ public class PartyManager : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        // Keep this object alive when changing scenes
+        
         if (IsServer)
         {
             DontDestroyOnLoad(gameObject);
@@ -24,19 +25,19 @@ public class PartyManager : NetworkBehaviour
     {
         ulong clientId = rpcParams.Receive.SenderClientId;
         
-        // 1. Check if someone else already picked this character
+       
         foreach (var role in lockedInRoles.Values)
         {
             if (role == roleIndex)
             {
                 Debug.LogWarning($"Client {clientId} tried to pick role {roleIndex}, but it's already taken!");
-                // Tell the client they failed (calls the new MenuButtons script)
+          
                 RoleTakenClientRpc(rpcParams.Receive.SenderClientId);
-                return; // Stop here, don't save the choice
+                return; 
             }
         }
 
-        // 2. If we get here, the character is free. Save it.
+       
         lockedInRoles[clientId] = roleIndex;
         Debug.Log($"Client {clientId} successfully locked in role {roleIndex}.");
     }
@@ -44,10 +45,10 @@ public class PartyManager : NetworkBehaviour
     [ClientRpc]
     private void RoleTakenClientRpc(ulong clientId)
     {
-        // This only runs on the specific client that tried to pick the taken role
+       
         if (NetworkManager.Singleton.LocalClientId == clientId)
         {
-            // UPDATED: We now look for MenuButtons instead of RoleSelector
+           
             MenuButtons ui = FindObjectOfType<MenuButtons>();
             if (ui != null)
             {
@@ -56,7 +57,7 @@ public class PartyManager : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = true)] // RequireOwnership = true means ONLY the Host can call this
+    [ServerRpc(RequireOwnership = true)] 
     public void StartGameServerRpc()
     {
         Debug.Log("Host started the game! Spawning everyone...");
@@ -69,11 +70,34 @@ public class PartyManager : NetworkBehaviour
             GameObject prefabToSpawn = characterPrefabs[roleIndex];
             GameObject instance = Instantiate(prefabToSpawn);
             
-            // Spawn the character and assign it to the correct player
+            
             instance.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
         }
         
-        // Clear the list so it's ready for next time
+  
         lockedInRoles.Clear();
+    }
+
+    private void ApprovalCheck(NetworkManager.ConnectionApprovalRequest request, NetworkManager.ConnectionApprovalResponse response)
+    {
+ 
+        string clientPassword = System.Text.Encoding.UTF8.GetString(request.Payload);
+        if (clientPassword != serverPassword)
+        {
+            response.Approved = false;
+            response.Reason = "Incorrect Password!";
+            return;
+        }
+
+   
+        response.Approved = true;
+        response.CreatePlayerObject = false; 
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene("CharacterSelection", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        }
+
+        Debug.Log($"Client {request.ClientNetworkId} approved. Moving to Character Select.");
     }
 }
